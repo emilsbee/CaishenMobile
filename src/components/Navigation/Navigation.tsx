@@ -2,37 +2,68 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StoreProvider } from 'easy-peasy';
 
 // Internal imports
 import App from "../App"
 import Login from "../Login"
-import store, { useStoreState } from '../../store/store';
+import Header from "../Header"
+import Styles from "../../styles/base"
+import { useStoreState } from '../../store/store';
+import {checkAccessToken} from "./helpers"
 
 const Stack = createStackNavigator();
 
+interface NavigationProps {
+    
+}
 
-const Navigation = () => {
-    const authenticated = store.getState().auth.authenticated
+const Navigation: React.FC<NavigationProps> = () => {
+    const [isAuthenticated, setIsAuthenticated] = React.useState(false)
+    
+    const authenticated = useStoreState(state => state.auth.authenticated)
+    
+    React.useEffect(() => {
+        checkAccessToken().then(result => {
+            setIsAuthenticated(result && true)
+        })
+    }, [])
+
+    React.useEffect(() => {
+        setIsAuthenticated(authenticated)
+    }, [authenticated])
 
     return (
-        <StoreProvider store={store}>
             <NavigationContainer>
                 <Stack.Navigator>
-                    {authenticated ?
+                    {isAuthenticated ?
                         <Stack.Screen 
                             component={App}
                             name="Home"
+                            options={({navigation}) => ({
+                                headerTitle: props => <Header title={"Caishen"}/>,
+                                headerStyle: {
+                                  backgroundColor: Styles.background.default,
+                                  borderBottomColor: Styles.background.default,
+                                  shadowColor: Styles.background.default
+                                }
+                            })}
                         />
                         :
                         <Stack.Screen 
                             component={Login}
                             name="Login"
+                            options={() => ({
+                                headerStyle: {
+                                  backgroundColor: Styles.background.default,
+                                  borderBottomColor: Styles.background.default,
+                                  shadowColor: Styles.background.default,
+                                },
+                                title: ''
+                            })}
                         />
                     }
                 </Stack.Navigator>
             </NavigationContainer>
-        </StoreProvider>
     );
 }
 

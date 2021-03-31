@@ -1,3 +1,5 @@
-import Navigation from "./Navigation"
+import navigation from "./Navigation"
+import navigationWrapper from "./NavigationWrapper"
 
-export default Navigation
+export const Navigation = navigation
+export const NavigationWrapper = navigationWrapper

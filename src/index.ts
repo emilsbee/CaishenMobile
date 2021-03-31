@@ -1,5 +1,4 @@
 import registerRootComponent from 'expo/build/launch/registerRootComponent';
+import {NavigationWrapper} from "./components/Navigation";
 
-import Navigation from "./components/Navigation";
-
-registerRootComponent(Navigation);
+registerRootComponent(NavigationWrapper);
