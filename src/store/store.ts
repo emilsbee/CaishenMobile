@@ -2,8 +2,8 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
 
 // Internal imports
-import AuthModel, {AuthModelType} from "./models/auth"
-import AccountModel, {AccountModelType} from "./models/account"
+import AuthModel, {AuthModelType} from "./models/auth/auth"
+import AccountModel, {AccountModelType} from "./models/account/account"
 
 const typedHooks = createTypedHooks<StoreModel>();
 export const useStoreActions = typedHooks.useStoreActions;

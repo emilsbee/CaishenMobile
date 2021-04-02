@@ -1,28 +1,48 @@
 // External imports
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { useStoreActions } from '../../store/store';
+import { StyleSheet } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 // Internal imports
-import {Button} from "../Button"
 import Styles from "../../styles/base"
+import AccountListWrapper from "../AccountList"
+import NewAccountForm from '../NewAccountForm';
+
+const Stack = createStackNavigator();
 
 export interface HomeProps {
     
 }
  
 const Home: React.FC<HomeProps> = () => {
-    const createAccount = useStoreActions(actions => actions.account.createAccount)
-    const getAccounts = useStoreActions(actions => actions.account.getAccounts)
     
     return (
-        <View style={styles.container}>
-            <Text>
-                Home 
-            </Text>
-            <Button text="add" onPress={() => createAccount({name: "React", type: "Crypto", iban: null})}/>
-            <Button text="get" onPress={() => getAccounts()}/>
-        </View>
+        <Stack.Navigator>
+            <Stack.Screen 
+                component={AccountListWrapper}
+                name="account-list"
+                options={{
+                    headerShown: false
+                }}
+            />
+            <Stack.Screen 
+                component={NewAccountForm}
+                name="new-account-form"
+                options={{
+                    headerBackTitle:"Back",
+                    headerTintColor: Styles.background.accent2,
+                    headerTitleStyle: {
+                        color: Styles.fontColor.default.light,
+                        fontSize: Styles.fontSize.h6,
+                    },
+                    headerStyle: {
+                        backgroundColor: Styles.background.default,
+                        shadowColor: 'transparent'
+                    },
+                    headerTitle: "New account"
+                }}
+            />
+        </Stack.Navigator>
     );
 }
 

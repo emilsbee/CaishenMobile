@@ -15,9 +15,7 @@ export default {
             light: "white"
         }, 
         error: "#9e2a2b",
-        accent: {
-            dark: "#663f46"
-        }
+        accent: "#e09f3e"
     }, 
     fontSize: {
         h1: 30,

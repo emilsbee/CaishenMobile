@@ -46,6 +46,8 @@ const Login: React.FC<LoginProps> = () => {
                     placeholder="username"
                     placeholderTextColor="darkgray"
                     autoCapitalize="none"
+                    importantForAutofill="yes"
+                    selectionColor={Styles.background.accent2}
                 />
                 <TextInput
                     style={styles.passwordInput}
@@ -54,6 +56,8 @@ const Login: React.FC<LoginProps> = () => {
                     placeholder="password"
                     placeholderTextColor="darkgray"
                     secureTextEntry={true}
+                    importantForAutofill="yes"
+                    selectionColor={Styles.background.accent2}
                 />
             </View>
             <View style={styles.buttonContainer}>
@@ -92,8 +96,13 @@ const styles = StyleSheet.create({
         color: Styles.fontColor.default.light
     },
     authErrorContainer: {
+        width: "100%",
         height: 30,
-        marginBottom: 10
+        marginBottom: 25,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        flexWrap: "wrap",
     },
     authError: {
         color: Styles.fontColor.error,
@@ -115,6 +124,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingLeft: 10,
         paddingRight: 10,
+        fontSize: Styles.fontSize.h7
     },
     passwordInput: {
         width: "100%",
@@ -123,6 +133,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingLeft: 10,
         paddingRight: 10,
+        fontSize: Styles.fontSize.h7
     },
     buttonContainer: {
         display: "flex",

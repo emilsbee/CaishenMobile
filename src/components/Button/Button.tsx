@@ -13,10 +13,11 @@ export interface ButtonProps {
     width?:number,
     borderRadius?:number,
     backgroundColor?:string,
-    fontColor?:string
+    fontColor?:string,
+    padding?:number
 }
  
-const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadius, backgroundColor, fontColor}) => {
+const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadius, backgroundColor, fontColor, padding}) => {
     
     const getBackgroundColor = ():string => {
         if (backgroundColor) {
@@ -35,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadi
                     height: height ? height : "auto",
                     width: width ? width : "auto",
                     borderRadius: borderRadius ? borderRadius : 10,
-                    backgroundColor: pressed ? LightenDarkenColor(getBackgroundColor(), -35) : getBackgroundColor()
+                    backgroundColor: pressed ? LightenDarkenColor(getBackgroundColor(), -35) : getBackgroundColor(),
                 }
             ]}
         >
@@ -56,14 +57,13 @@ const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadi
 const styles = StyleSheet.create({
     container: {
         display: "flex",
-        flexDirection: "row",
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        alignContent: "center",
         padding: 9
     },
     text: {
-        fontSize: Styles.fontSize.h9
+        fontSize: Styles.fontSize.h8
     }
 })
 
