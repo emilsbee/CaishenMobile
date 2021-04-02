@@ -1,26 +1,35 @@
 // External imports
 import React from 'react';
-import { StoreProvider } from 'easy-peasy';
-import { StatusBar } from 'expo-status-bar';
 
 // Internal imports
 import Navigation from "./Navigation"
-import store from '../../store/store';
+import { useStoreState } from '../../store/store';
+import {checkAccessToken} from "./helpers"
 
 export interface NavigationWrapperProps {
     
 }
  
 /**
- * Wraps the Navigation component with easy-peasy store. 
+ * Wrapper component for Navigation component.  
  */
 const NavigationWrapper: React.FC<NavigationWrapperProps> = () => {
+    const [isAuthenticated, setIsAuthenticated] = React.useState(false)
+
+    const authenticated = useStoreState(state => state.auth.authenticated)
+
+    React.useEffect(() => {
+        checkAccessToken().then(result => {
+            setIsAuthenticated(result && true)
+        })
+    }, [])
+
+    React.useEffect(() => {
+        setIsAuthenticated(authenticated)
+    }, [authenticated])
 
     return (
-        <StoreProvider store={store}>
-            <Navigation/>
-            <StatusBar style="light" />
-        </StoreProvider>
+        <Navigation authenticated={isAuthenticated}/>
     );
 }
  

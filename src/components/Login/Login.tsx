@@ -44,6 +44,7 @@ const Login: React.FC<LoginProps> = () => {
                     onChangeText={text => setUsername(text)}
                     value={username}
                     placeholder="username"
+                    placeholderTextColor="darkgray"
                     autoCapitalize="none"
                 />
                 <TextInput
@@ -51,6 +52,7 @@ const Login: React.FC<LoginProps> = () => {
                     onChangeText={text => setPassword(text)}
                     value={password}
                     placeholder="password"
+                    placeholderTextColor="darkgray"
                     secureTextEntry={true}
                 />
             </View>
