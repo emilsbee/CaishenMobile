@@ -10,14 +10,15 @@ export interface ButtonProps {
     text:string, // Text to display on button
     onPress: (event: GestureResponderEvent) => void, // On press event
     height?:number,
-    width?:number,
+    width?:(number | string),
     borderRadius?:number,
     backgroundColor?:string,
     fontColor?:string,
-    padding?:number
+    padding?:number,
+    containerStyle?:{}
 }
  
-const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadius, backgroundColor, fontColor, padding}) => {
+const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadius, backgroundColor, fontColor, padding, containerStyle}) => {
     
     const getBackgroundColor = ():string => {
         if (backgroundColor) {
@@ -37,6 +38,7 @@ const Button: React.FC<ButtonProps> = ({text, onPress, height, width, borderRadi
                     width: width ? width : "auto",
                     borderRadius: borderRadius ? borderRadius : 10,
                     backgroundColor: pressed ? LightenDarkenColor(getBackgroundColor(), -35) : getBackgroundColor(),
+                    ...containerStyle
                 }
             ]}
         >

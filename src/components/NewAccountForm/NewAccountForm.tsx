@@ -1,10 +1,14 @@
 // External imports
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, Pressable, Keyboard } from 'react-native';
+import { StyleSheet, Pressable, Keyboard, ScrollView, View } from 'react-native';
 
 // Internal imports
 import Styles from "../../styles/base"
-import Section from "./NewAccountFormSection"
+import Section from "../Form/Section"
+import SelectValueElement from "../Form/SelectValueElement"
+import TextInput from "../Form/TextInputElement"
+import Dropdown from "../Form/DropdownElement"
+import {Button} from "../Form/../Button"
 
 export interface NewAccountFormProps {
     
@@ -12,26 +16,56 @@ export interface NewAccountFormProps {
  
 const NewAccountForm: React.FC<NewAccountFormProps> = () => {
     // Local state
-    const [selected, setSelected] = React.useState("")
-    
+    const [accountNameInput, setAccountNameInput] = React.useState("")
+    const [accountType, setAccountType] = React.useState("")
+    const [ibanInput, setIbanInput] = React.useState("")
+    const [currency, setCurrency] = React.useState("")
+    const [description, setDescription] = React.useState("")
 
     return (
         <Pressable style={styles.container} onPress={() => Keyboard.dismiss()}>
-            <Section title="Account name">
-                <TextInput
-                    onFocus={() => setSelected("name")} 
-                    onBlur={() => setSelected("")}
-                    style={
-                        [
-                            styles.sectionInput, 
-                            {
-                                borderColor: selected === "name" ? Styles.background.accent2 : "darkgrey",
-                            }
-                        ]
-                    } 
-                    selectionColor={Styles.background.accent2}
-                />
-            </Section>
+            <ScrollView>
+                <Section title="Name">
+                    <TextInput
+                        onChangeText={text => setAccountNameInput(text)}
+                        text={accountNameInput}
+                    />
+                </Section>
+                <Section title="Type">
+                    <SelectValueElement values={["Bank", "Crypto", "Cash"]} onPick={value => setAccountType(value.toString())}/>
+                </Section>
+                <View style={{zIndex:100}}>
+                    <Section title="Currency" containerStyle={{height:100}}>
+                        <Dropdown values={["EUR", "USD", "GBP"]} onPick={value => setCurrency(value.toString())} currentValue={currency}/>
+                    </Section>
+                </View>
+
+                { accountType === "Bank" &&
+                    <Section title="IBAN (optional)">
+                        <TextInput
+                            onChangeText={text => setIbanInput(text)}
+                            text={ibanInput}
+                        />
+                    </Section>
+                }
+                <Section title="Description">
+                    <TextInput
+                        onChangeText={text => setDescription(text)}
+                        text={description}
+                        multiline={true}
+                        height={100}
+                    />
+                </Section>
+                <Section title="" containerStyle={{alignItems: "center"}}>
+                    <Button 
+                        text="Create" 
+                        onPress={() => console.log("pressed")} 
+                        backgroundColor={Styles.background.accent2} 
+                        fontColor={Styles.fontColor.default.light}
+                        width={"80%"}
+                    />
+                </Section>
+            </ScrollView>
         </Pressable>
     );
 }
@@ -41,29 +75,8 @@ const styles = StyleSheet.create({
         height: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "flex-start"
-    }, 
-    sectionContainer: {
-        width: "100%",
-        height: 100,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "flex-start",
-        padding: "5%",
+        justifyContent: "flex-start",
     },
-    sectionTitle: {
-        fontSize: Styles.fontSize.h7,
-        color: Styles.fontColor.default.light,
-        marginBottom: 15,
-    },
-    sectionInput: {
-        padding: 10,
-        borderRadius: 10,
-        width: "100%",
-        borderWidth: 1,
-        fontSize: Styles.fontSize.h7,
-        color: Styles.fontColor.default.light
-    }
 })
 
 export default NewAccountForm;
