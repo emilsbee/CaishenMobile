@@ -33,7 +33,7 @@ const AccountList: React.FC<AccountListProps> = ({accounts, onRefresh, refreshin
             >
                 <View style={styles.titleContainer}>
                     <Text style={styles.title}>
-                        Accounts
+                        Accounts list 
                     </Text>
                     <Pressable 
                         onPress={() => {
