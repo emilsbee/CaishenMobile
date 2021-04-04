@@ -1,6 +1,6 @@
 // External imports
 import  React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, Pressable, ScrollView, RefreshControl } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 // Internal imports
@@ -10,35 +10,50 @@ import Styles from "../../styles/base"
 
 export interface AccountListProps {
     accounts: AccountType[]
+    onRefresh: () => void,
+    refreshing:boolean
 }
  
-const AccountList: React.FC<AccountListProps> = ({accounts}) => {
+const AccountList: React.FC<AccountListProps> = ({accounts, onRefresh, refreshing}) => {
+
+
     const navigation = useNavigation()
     
     return (
-        <View style={styles.container}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>
-                    Accounts
-                </Text>
-                <Pressable 
-                    onPress={() => {
-                        navigation.navigate("new-account-form")
-                    }}
-                >
-                    <Text 
-                        style={styles.buttonText}
-                    >
-                        +
+        <SafeAreaView style={styles.container}>
+            <ScrollView
+
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                        tintColor={Styles.background.accent2}
+                    />
+                }
+            >
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>
+                        Accounts
                     </Text>
-                </Pressable>
-            </View>
-            {accounts.length !== 0 && accounts.map(account => {
-                return (
-                    <AccountItem key={account.id} account={account}/>
-                )
-            })}
-        </View>
+                    <Pressable 
+                        onPress={() => {
+                            navigation.navigate("new-account-form")
+                        }}
+                    >
+                        <Text 
+                            style={styles.buttonText}
+                        >
+                            +
+                        </Text>
+                    </Pressable>
+                </View>
+                {accounts.length !== 0 && accounts.map(account => {
+                    return (
+                        <AccountItem key={account.id} account={account}/>
+                    )
+                })}
+            </ScrollView>
+        </SafeAreaView>
     );
 }
  

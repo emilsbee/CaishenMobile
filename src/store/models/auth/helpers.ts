@@ -28,7 +28,8 @@ export const login = async (username:string, password:string):Promise<{success:b
                 text: "Wrong password/username."
             }
         } else {
-            let accessToken = await response.json();
+            let {accessToken} = await response.json();
+            
             return {
                 success: true,
                 text: accessToken

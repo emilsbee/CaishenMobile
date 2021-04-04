@@ -26,7 +26,13 @@ export interface AccountModelType {
      * Setter for accounts.
      * @param {AccountType[]} accounts The array of accounts.
      */
-    setAccounts: Action<AccountModelType, {accounts:AccountType[]}>
+    setAccounts: Action<AccountModelType, {accounts:AccountType[]}>,
+
+    /**
+     * Adds account to the accounts currently stored in the store.
+     * @param {AccountType} account The account to add to the store account array.
+     */
+    addAccount: Action<AccountModelType, {account:AccountType}>
 }
 
 const AccountModel:AccountModelType = {
@@ -39,7 +45,9 @@ const AccountModel:AccountModelType = {
     setAccounts: action((state, payload) => {
         state.accounts = payload.accounts
     }),
-    
+    addAccount: action((state, payload) => {
+        state.accounts.push(payload.account)
+    })
 }
 
 export default AccountModel

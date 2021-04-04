@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "CaishenMobile",
+    "name": "Caishen",
     "slug": "CaishenMobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -19,7 +19,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-
+      "bundleIdentifier": "com.mrfinance.CaishenMobile"
     },
     "android": {
       "adaptiveIcon": {

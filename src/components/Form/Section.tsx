@@ -1,6 +1,6 @@
 // External imports
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet} from 'react-native';
 
 // Internal imports
 import Styles from "../../styles/base"
@@ -8,7 +8,7 @@ import Styles from "../../styles/base"
 export interface SectionProps {
     children:React.ReactNode,
     title:string,
-    containerStyle?:{}
+    containerStyle?:{},
 }
  
 /**
@@ -20,10 +20,10 @@ export interface SectionProps {
 const Section: React.FC<SectionProps> = ({children, title, containerStyle}) => {
     return (
         <View style={[styles.sectionContainer, {...containerStyle}]}>
-                <Text style={styles.sectionTitle}>
-                    {title}
-                </Text>
-                {children}
+            <Text style={styles.sectionTitle}>
+                {title}
+            </Text>
+            {children}
         </View>
     );
 }

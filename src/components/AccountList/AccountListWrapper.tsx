@@ -15,6 +15,7 @@ export interface AccountListWrapperProps {
 const AccountListWrapper: React.FC<AccountListWrapperProps> = () => {
     // Local state
     const [error, setError] = React.useState("")
+    const [refreshing, setRefreshing] = React.useState(false);
 
     // Store actions
     const setAccounts = useStoreActions(actions => actions.account.setAccounts)
@@ -32,6 +33,18 @@ const AccountListWrapper: React.FC<AccountListWrapperProps> = () => {
         })
     }, [])
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        getAccounts(accessToken).then(res => {
+            setAccounts({accounts: res})
+            setRefreshing(false)
+            setError("")
+        }).catch(() => {
+            setRefreshing(false)
+            setError("Couldn't fetch accounts.")
+        })
+      }, []);
+
     return (
         error.length > 0 ? 
             <View style={styles.errorContainer}>
@@ -40,7 +53,7 @@ const AccountListWrapper: React.FC<AccountListWrapperProps> = () => {
                 </Text>
             </View>
             :
-            <AccountList accounts={accounts}/>
+            <AccountList accounts={accounts} onRefresh={onRefresh} refreshing={refreshing}/>
     );
 }
 

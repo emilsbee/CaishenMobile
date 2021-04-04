@@ -33,9 +33,12 @@ export const getAccounts = (accessToken:string):Promise<AccountType[]> => {
  * @param name Name of the account.
  * @param iban OPTIONAL Iban of the account.
  * @param type Account type: bank, crypto, cash.
+ * @param currency Account currency.
+ * @param description Account description.
  * @returns An array that contains the account created. 
  */
-export const createAccount = (accessToken:string, name:string, type:string, iban?:string):Promise<AccountType[]> => {
+export const createAccount = (accessToken:string, name:string, type:string, currency:string, description:string, iban?:string):Promise<AccountType[]> => {
+    
     const content = {
         method: 'POST',
         headers: {
@@ -44,9 +47,11 @@ export const createAccount = (accessToken:string, name:string, type:string, iban
             Authorization: "Bearer "+ accessToken
         },
         body: JSON.stringify({
-            name: name,
-            iban: iban,
-            type: type
+            name,
+            iban: iban ? iban : null,
+            type,
+            currency,
+            description,
         })
     }
 
